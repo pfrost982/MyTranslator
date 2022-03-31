@@ -12,11 +12,13 @@ import ru.gb.mytranslator.model.data.AppState
 
 class MainViewModel(
     private val repository: Repository = RepositoryImpl(),
-    private val liveDataForViewToObserve: MutableLiveData<AppState> = MutableLiveData(),
+    private val _liveDataForViewToObserve: MutableLiveData<AppState> = MutableLiveData(),
     private val compositeDisposable: CompositeDisposable = CompositeDisposable(),
 ) : ViewModel() {
 
     private var appState: AppState? = null
+    private val liveDataForViewToObserve: LiveData<AppState>
+        get() = _liveDataForViewToObserve
 
     fun getData(word: String, isOnline: Boolean): LiveData<AppState> {
         compositeDisposable.add(
@@ -25,7 +27,7 @@ class MainViewModel(
             }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { liveDataForViewToObserve.value = AppState.Loading(null) }
+                .doOnSubscribe { _liveDataForViewToObserve.value = AppState.Loading(null) }
                 .subscribeWith(getObserver())
         )
         return liveDataForViewToObserve
@@ -36,11 +38,11 @@ class MainViewModel(
 
             override fun onNext(state: AppState) {
                 appState = state
-                liveDataForViewToObserve.value = state
+                _liveDataForViewToObserve.value = state
             }
 
             override fun onError(e: Throwable) {
-                liveDataForViewToObserve.value = AppState.Error(e)
+                _liveDataForViewToObserve.value = AppState.Error(e)
             }
 
             override fun onComplete() {
