@@ -3,6 +3,7 @@ package ru.gb.mytranslator.di
 import dagger.Module
 import dagger.Provides
 import ru.gb.mytranslator.model.RepositoryImpl
+import ru.gb.mytranslator.model.retrofit.RetrofitApiService
 import ru.gb.mytranslator.view_model.Repository
 import javax.inject.Singleton
 
@@ -10,7 +11,7 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Singleton
     @Provides
-    fun provideRepository(retrofitApiService: RetrofitApiService): Repository {
-        return RepositoryImpl(retrofitApiService)
+    fun provideRepository(api: RetrofitApiService): Repository {
+        return RepositoryImpl(api)
     }
 }

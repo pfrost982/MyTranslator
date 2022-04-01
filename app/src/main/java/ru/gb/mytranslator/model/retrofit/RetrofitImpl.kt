@@ -4,10 +4,10 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitImpl  {
+class RetrofitImpl {
 
-    fun getService(): ApiService {
-        return createRetrofit().create(ApiService::class.java)
+    fun getService(): RetrofitApiService {
+        return createRetrofit().create(RetrofitApiService::class.java)
     }
 
     private fun createRetrofit(): Retrofit {

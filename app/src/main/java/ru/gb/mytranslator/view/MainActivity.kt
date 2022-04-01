@@ -6,7 +6,6 @@ import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import geekbrains.ru.translator.R
 import geekbrains.ru.translator.databinding.ActivityMainBinding

@@ -1,7 +1,7 @@
 package ru.gb.mytranslator.model
 
 import io.reactivex.Observable
-import ru.gb.mytranslator.di.RetrofitApiService
+import ru.gb.mytranslator.model.retrofit.RetrofitApiService
 import ru.gb.mytranslator.model.data.DataModel
 import ru.gb.mytranslator.view_model.Repository
 import javax.inject.Inject

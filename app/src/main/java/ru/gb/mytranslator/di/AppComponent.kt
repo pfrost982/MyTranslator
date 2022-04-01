@@ -4,7 +4,6 @@ import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import ru.gb.mytranslator.view.MainActivity
-import ru.gb.mytranslator.view_model.Repository
 import javax.inject.Singleton
 
 @Singleton
