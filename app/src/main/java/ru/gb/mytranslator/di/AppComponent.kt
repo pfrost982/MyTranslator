@@ -1,29 +1,27 @@
 package ru.gb.mytranslator.di
 
-import android.app.Application
+import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.support.AndroidSupportInjectionModule
+import ru.gb.mytranslator.view.MainActivity
+import ru.gb.mytranslator.view_model.Repository
 import javax.inject.Singleton
-import ru.gb.mytranslator.App
 
+@Singleton
 @Component(
     modules = [
-        RepositoryModule::class,
-        ViewModelModule::class,
-        ActivityModule::class,
-        AndroidSupportInjectionModule::class]
+        RetrofitModule::class,
+        RepositoryModule::class
+    ]
 )
-@Singleton
 interface AppComponent {
-
     @Component.Builder
     interface Builder {
-        @BindsInstance
-        fun application(application: Application): Builder
 
+        @BindsInstance
+        fun setContext(context: Context): Builder
         fun build(): AppComponent
     }
 
-    fun inject(englishVocabularyApp: App)
+    fun inject(activity: MainActivity)
 }

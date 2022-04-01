@@ -6,13 +6,18 @@ import ru.gb.mytranslator.di.DaggerAppComponent
 
 class App : Application() {
 
-    class App: Application() {
+    private lateinit var appComponent: AppComponent
+    override fun onCreate() {
+        super.onCreate()
+        instance = this
+        appComponent = DaggerAppComponent.builder().setContext(this).build()
+    }
 
-        lateinit var appComponent: AppComponent
+    companion object{
+        lateinit var instance: App
+    }
 
-        override fun onCreate() {
-            super.onCreate()
-            appComponent = DaggerAppComponent.create()
-        }
+    fun getAppComponent(): AppComponent{
+        return appComponent
     }
 }

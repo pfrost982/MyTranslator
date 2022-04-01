@@ -7,14 +7,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import ru.gb.mytranslator.model.RepositoryImpl
 import ru.gb.mytranslator.model.data.AppState
+import javax.inject.Inject
 
-class MainViewModel(
-    private val repository: Repository = RepositoryImpl(),
-    private val _liveDataForViewToObserve: MutableLiveData<AppState> = MutableLiveData(),
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable(),
-) : ViewModel() {
+class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+
+    private val _liveDataForViewToObserve: MutableLiveData<AppState> = MutableLiveData<AppState>()
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private var appState: AppState? = null
     private val liveDataForViewToObserve: LiveData<AppState>
