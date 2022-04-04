@@ -8,9 +8,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import ru.gb.mytranslator.model.data.AppState
-import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+class MainViewModel (private val repository: Repository) : ViewModel() {
 
     private val _liveDataForViewToObserve: MutableLiveData<AppState> = MutableLiveData<AppState>()
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()

@@ -9,23 +9,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import geekbrains.ru.translator.R
 import geekbrains.ru.translator.databinding.ActivityMainBinding
-import ru.gb.mytranslator.App
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.gb.mytranslator.model.data.AppState
 import ru.gb.mytranslator.model.data.DataModel
 import ru.gb.mytranslator.view_model.MainViewModel
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    @Inject
-    lateinit var model: MainViewModel
-/*
-    val model: MainViewModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(MainViewModel::class.java)
-    }
-*/
+    val model: MainViewModel by viewModel()
 
     private val observer = Observer<AppState> { renderData(it) }
     private var adapter: MainAdapter? = null
@@ -40,8 +33,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        App.instance.getAppComponent().inject(this)
 
         binding.searchFab.setOnClickListener {
             val searchDialogFragment = SearchDialogFragment.newInstance()
