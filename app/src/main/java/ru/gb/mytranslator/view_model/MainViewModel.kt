@@ -31,10 +31,15 @@ class MainViewModel (private val repository: Repository) : ViewModel() {
     fun getData(word: String, isOnline: Boolean) {
         _liveDataForViewToObserve.value = AppState.Loading(null)
         cancelJob()
-        viewModelCoroutineScope.launch { _liveDataForViewToObserve.value = AppState.Success(repository.getData(word, isOnline)) }
+        viewModelCoroutineScope.launch { _liveDataForViewToObserve.postValue(AppState.Success(repository.getData(word, isOnline))) }
     }
 
     private fun cancelJob() {
         viewModelCoroutineScope.coroutineContext.cancelChildren()
+    }
+
+    override fun onCleared() {
+        cancelJob()
+        super.onCleared()
     }
 }

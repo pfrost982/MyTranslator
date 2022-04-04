@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     val model: MainViewModel by viewModel()
 
-    //private val observer = Observer<AppState> { renderData(it) }
     private var adapter: MainAdapter? = null
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
@@ -32,9 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        model.subscribe().observe(
-            this@MainActivity
-        ) { renderData(it) }
+        model.subscribe().observe(this@MainActivity) { renderData(it) }
 
         binding.searchFab.setOnClickListener {
             val searchDialogFragment = SearchDialogFragment.newInstance()
