@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import ru.gb.mytranslator.model.data.AppState
 
-class MainViewModel (private val repository: Repository) : ViewModel() {
+class MainViewModel(private val repository: Repository) : ViewModel() {
 
     private val _liveDataForViewToObserve: MutableLiveData<AppState> = MutableLiveData<AppState>()
 
@@ -14,11 +14,13 @@ class MainViewModel (private val repository: Repository) : ViewModel() {
         get() = _liveDataForViewToObserve
 
     private val viewModelCoroutineScope = CoroutineScope(
-        Dispatchers.Main
+        Dispatchers.IO
                 + SupervisorJob()
                 + CoroutineExceptionHandler { _, throwable ->
             handleError(throwable)
         })
+
+    private var job: Job? = null
 
     fun subscribe(): LiveData<AppState> {
         return liveDataForViewToObserve
@@ -30,16 +32,16 @@ class MainViewModel (private val repository: Repository) : ViewModel() {
 
     fun getData(word: String, isOnline: Boolean) {
         _liveDataForViewToObserve.value = AppState.Loading(null)
-        cancelJob()
-        viewModelCoroutineScope.launch { _liveDataForViewToObserve.postValue(AppState.Success(repository.getData(word, isOnline))) }
-    }
-
-    private fun cancelJob() {
-        viewModelCoroutineScope.coroutineContext.cancelChildren()
+        job?.cancel()
+        job = viewModelCoroutineScope.launch {
+            _liveDataForViewToObserve.postValue(
+                AppState.Success(repository.getData(word, isOnline))
+            )
+        }
     }
 
     override fun onCleared() {
-        cancelJob()
+        viewModelCoroutineScope.coroutineContext.cancel()
         super.onCleared()
     }
 }

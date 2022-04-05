@@ -72,6 +72,11 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
+    }
+
     interface OnSearchClickListener {
 
         fun onClick(searchWord: String)

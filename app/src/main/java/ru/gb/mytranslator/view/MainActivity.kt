@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                         binding.mainActivityRecyclerview.adapter =
                             MainAdapter(onListItemClickListener, data)
                     } else {
-                        adapter!!.setData(data)
+                        adapter?.setData(data)
                     }
                 }
             }
