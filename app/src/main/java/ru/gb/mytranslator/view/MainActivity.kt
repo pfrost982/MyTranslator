@@ -46,8 +46,10 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_history -> {
-                Toast.makeText(this@MainActivity, "OLOLO!!!", Toast.LENGTH_SHORT).show()
-                //startActivity(Intent(this, HistoryActivity::class.java))
+                val toast = { text: String ->
+                    Toast.makeText(this@MainActivity, text, Toast.LENGTH_SHORT).show()
+                }
+                model.getHistory(toast)
                 true
             }
             else -> super.onOptionsItemSelected(item)

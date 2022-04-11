@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import ru.gb.mytranslator.model.data.AppState
+import ru.gb.mytranslator.model.data.DataModel
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
@@ -34,9 +35,20 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         _liveDataForViewToObserve.value = AppState.Loading(null)
         job?.cancel()
         job = viewModelCoroutineScope.launch {
-            _liveDataForViewToObserve.postValue(
-                AppState.Success(repository.getData(word, isOnline))
-            )
+            val data = repository.getData(word, isOnline)
+            _liveDataForViewToObserve.postValue(AppState.Success(data))
+            repository.saveToDB(data[0])
+        }
+    }
+
+    fun getHistory(toast: (text: String) -> Unit) {
+
+        viewModelCoroutineScope.launch {
+            val historyList = repository.getFromDB()
+            val wordsList = mutableListOf<String>()
+            historyList.forEach {
+                wordsList.add(it.word) }
+            CoroutineScope(Dispatchers.Main).launch { toast(wordsList.toString()) }
         }
     }
 
