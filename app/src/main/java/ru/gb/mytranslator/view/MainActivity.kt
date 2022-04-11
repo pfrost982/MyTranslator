@@ -20,12 +20,13 @@ class MainActivity : AppCompatActivity() {
     val model: MainViewModel by viewModel()
 
     private var adapter: MainAdapter? = null
-    private val onListItemClickListener: MainAdapter.OnListItemClickListener =
-        object : MainAdapter.OnListItemClickListener {
-            override fun onItemClick(data: DataModel) {
-                Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
-            }
-        }
+
+    private val onItemClick = { data: DataModel ->
+        Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
+    }
+
+    private val onSearchClick = {searchWord: String -> model.getData(searchWord, true)}
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.searchFab.setOnClickListener {
             val searchDialogFragment = SearchDialogFragment.newInstance()
-            searchDialogFragment.setOnSearchClickListener(object :
-                SearchDialogFragment.OnSearchClickListener {
-                override fun onClick(searchWord: String) {
-                    model.getData(searchWord, true)
-                }
-            })
+            searchDialogFragment.setOnSearchClickListener(onSearchClick)
             searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
         }
     }
@@ -57,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                         binding.mainActivityRecyclerview.layoutManager =
                             LinearLayoutManager(applicationContext)
                         binding.mainActivityRecyclerview.adapter =
-                            MainAdapter(onListItemClickListener, data)
+                            MainAdapter(onItemClick, data)
                     } else {
                         adapter?.setData(data)
                     }
@@ -108,6 +104,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG =
-            "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
+            "BOTTOM_SHEET_FRAGMENT_DIALOG_TAG"
     }
 }

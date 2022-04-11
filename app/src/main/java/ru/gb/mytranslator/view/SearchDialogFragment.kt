@@ -13,7 +13,7 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
 
     private var _binding: SearchDialogFragmentBinding? = null
     private val binding get() = _binding!!
-    private var onSearchClickListener: OnSearchClickListener? = null
+    private var onSearchClick: ((String) -> Unit) = { }
 
     private val textWatcher = object : TextWatcher {
 
@@ -34,16 +34,6 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
         override fun afterTextChanged(s: Editable) {}
     }
 
-    private val onSearchButtonClickListener =
-        View.OnClickListener {
-            onSearchClickListener?.onClick(binding.searchEditText.text.toString())
-            dismiss()
-        }
-
-    internal fun setOnSearchClickListener(listener: OnSearchClickListener) {
-        onSearchClickListener = listener
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,14 +45,12 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.searchButtonTextview.setOnClickListener(onSearchButtonClickListener)
+        binding.searchButtonTextview.setOnClickListener {
+            onSearchClick(binding.searchEditText.text.toString())
+            dismiss()
+        }
         binding.searchEditText.addTextChangedListener(textWatcher)
         addOnClearClickListener()
-    }
-
-    override fun onDestroyView() {
-        onSearchClickListener = null
-        super.onDestroyView()
     }
 
     private fun addOnClearClickListener() {
@@ -77,9 +65,8 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
         super.onDestroy()
     }
 
-    interface OnSearchClickListener {
-
-        fun onClick(searchWord: String)
+    fun setOnSearchClickListener(onSearchClick: (String) -> Unit) {
+        this.onSearchClick = onSearchClick
     }
 
     companion object {

@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_main_recyclerview_item.view.*
 import ru.gb.mytranslator.model.data.DataModel
 
 class MainAdapter(
-    private var onListItemClickListener: OnListItemClickListener,
+    val onItemClick: (itemData: DataModel) -> Unit,
     private var data: List<DataModel>
 ) : RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
 
@@ -41,16 +41,8 @@ class MainAdapter(
                 itemView.headerTextviewRecyclerItem.text = data.text
                 itemView.descriptionTextviewRecyclerItem.text =
                     data.meanings?.get(0)?.translation?.translation
-                itemView.setOnClickListener { openInNewWindow(data) }
+                itemView.setOnClickListener { onItemClick(data) }
             }
         }
-    }
-
-    private fun openInNewWindow(listItemData: DataModel) {
-        onListItemClickListener.onItemClick(listItemData)
-    }
-
-    interface OnListItemClickListener {
-        fun onItemClick(data: DataModel)
     }
 }
