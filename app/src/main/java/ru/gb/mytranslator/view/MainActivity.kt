@@ -3,7 +3,6 @@ package ru.gb.mytranslator.view
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import geekbrains.ru.translator.R
@@ -21,11 +20,20 @@ class MainActivity : AppCompatActivity() {
 
     private var adapter: MainAdapter? = null
 
-    private val onItemClick = { data: DataModel ->
-        Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
+    private val onItemClick = { data: DataModel -> showDescription(data) }
+
+    private fun showDescription(data: DataModel) {
+        supportFragmentManager
+            .beginTransaction()
+            .addToBackStack(null)
+            .replace(
+                R.id.container,
+                DescriptionFragment(data)
+            )
+            .commit()
     }
 
-    private val onSearchClick = {searchWord: String -> model.getData(searchWord, true)}
+    private val onSearchClick = { searchWord: String -> model.getData(searchWord, true) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
