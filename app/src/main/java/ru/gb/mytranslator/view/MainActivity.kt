@@ -1,8 +1,11 @@
 package ru.gb.mytranslator.view
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import geekbrains.ru.translator.R
@@ -35,6 +38,21 @@ class MainActivity : AppCompatActivity() {
 
     private val onSearchClick = { searchWord: String -> model.getData(searchWord, true) }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.history_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_history -> {
+                Toast.makeText(this@MainActivity, "OLOLO!!!", Toast.LENGTH_SHORT).show()
+                //startActivity(Intent(this, HistoryActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
