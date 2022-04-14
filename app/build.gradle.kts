@@ -76,6 +76,9 @@ dependencies {
     kapt("androidx.room:room-compiler:2.3.0")
     implementation("androidx.room:room-ktx:2.3.0")
 
+    //data
+    implementation(project(":data"))
+
     implementation("io.reactivex.rxjava2:rxjava:2.2.8")
     //Test
     testImplementation("junit:junit:4.12")

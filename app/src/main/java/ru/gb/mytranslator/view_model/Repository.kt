@@ -1,6 +1,6 @@
 package ru.gb.mytranslator.view_model
 
-import ru.gb.mytranslator.model.data.DataModel
+import ru.gb.data.DataModel
 import ru.gb.mytranslator.model.room.HistoryEntity
 
 interface Repository {

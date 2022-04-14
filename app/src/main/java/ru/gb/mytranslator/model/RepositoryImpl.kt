@@ -1,6 +1,6 @@
 package ru.gb.mytranslator.model
 
-import ru.gb.mytranslator.model.data.DataModel
+import ru.gb.data.DataModel
 import ru.gb.mytranslator.model.retrofit.RetrofitApiService
 import ru.gb.mytranslator.model.room.HistoryDao
 import ru.gb.mytranslator.model.room.HistoryEntity

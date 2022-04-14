@@ -3,7 +3,7 @@ package ru.gb.mytranslator.model.retrofit
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
-import ru.gb.mytranslator.model.data.DataModel
+import ru.gb.data.DataModel
 
 interface RetrofitApiService {
 

@@ -1,4 +1,4 @@
-package ru.gb.mytranslator.model.data
+package ru.gb.data
 
 sealed class AppState {
 

@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
-import ru.gb.mytranslator.model.data.AppState
-import ru.gb.mytranslator.model.data.DataModel
+import ru.gb.data.AppState
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 

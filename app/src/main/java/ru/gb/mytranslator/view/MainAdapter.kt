@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import geekbrains.ru.translator.R
 import kotlinx.android.synthetic.main.activity_main_recyclerview_item.view.*
-import ru.gb.mytranslator.model.data.DataModel
+import ru.gb.data.DataModel
 
 class MainAdapter(
     val onItemClick: (itemData: DataModel) -> Unit,

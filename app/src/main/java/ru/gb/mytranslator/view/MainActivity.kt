@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import geekbrains.ru.translator.R
 import geekbrains.ru.translator.databinding.ActivityMainBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.gb.mytranslator.model.data.AppState
-import ru.gb.mytranslator.model.data.DataModel
+import ru.gb.data.AppState
+import ru.gb.data.DataModel
 import ru.gb.mytranslator.view_model.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                 if (appState.progress != null) {
                     binding.progressBarHorizontal.visibility = VISIBLE
                     binding.progressBarRound.visibility = GONE
-                    binding.progressBarHorizontal.progress = appState.progress
+                    binding.progressBarHorizontal.progress = appState.progress!!
                 } else {
                     binding.progressBarHorizontal.visibility = GONE
                     binding.progressBarRound.visibility = VISIBLE
