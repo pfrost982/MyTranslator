@@ -11,14 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import geekbrains.ru.translator.R
 import geekbrains.ru.translator.databinding.ActivityMainBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinScopeComponent
+import org.koin.core.component.getOrCreateScope
+import org.koin.core.scope.Scope
 import ru.gb.data.AppState
 import ru.gb.data.DataModel
 import ru.gb.mytranslator.view_model.MainViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity() : AppCompatActivity(), KoinScopeComponent {
 
     private lateinit var binding: ActivityMainBinding
 
+    override val scope: Scope by getOrCreateScope()
     val model: MainViewModel by viewModel()
 
     private var adapter: MainAdapter? = null
