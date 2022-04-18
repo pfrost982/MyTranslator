@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
 
     <TextView
-            android:id="@+id/headerTextviewRecyclerItem"
+            android:id="@+id/header_textview_recycler_item"
             android:layout_width="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
             tools:text="Header"/>
 
     <TextView
-            android:id="@+id/descriptionTextviewRecyclerItem"
+            android:id="@+id/description_textview_recycler_item"
             android:layout_width="wrap_content"
             style="@style/BaseTextStyle"
             android:layout_marginStart="@dimen/margin_medium"
