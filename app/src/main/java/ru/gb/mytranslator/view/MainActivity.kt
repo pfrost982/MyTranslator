@@ -1,12 +1,17 @@
 package ru.gb.mytranslator.view
 
+import android.animation.ObjectAnimator
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.animation.AnticipateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.animation.doOnEnd
 import androidx.recyclerview.widget.LinearLayoutManager
 import geekbrains.ru.translator.R
 import geekbrains.ru.translator.databinding.ActivityMainBinding
@@ -18,7 +23,7 @@ import ru.gb.data.AppState
 import ru.gb.data.DataModel
 import ru.gb.mytranslator.view_model.MainViewModel
 
-class MainActivity() : AppCompatActivity(), KoinScopeComponent {
+class MainActivity : AppCompatActivity(), KoinScopeComponent {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -64,6 +69,33 @@ class MainActivity() : AppCompatActivity(), KoinScopeComponent {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (Build.VERSION.SDK_INT >= 31) {
+            splashScreen.setOnExitAnimationListener { splashScreenView ->
+
+                val rotate = ObjectAnimator.ofFloat(
+                    splashScreenView,
+                    View.ROTATION_X,
+                    0f,
+                    360f
+                )
+                rotate.duration = 2000
+                rotate.doOnEnd {
+                    val slideLeft = ObjectAnimator.ofFloat(
+                        splashScreenView,
+                        View.TRANSLATION_X,
+                        0f,
+                        -splashScreenView.height.toFloat()
+                    )
+                    slideLeft.interpolator = AnticipateInterpolator()
+                    slideLeft.duration = 2000
+                    slideLeft.doOnEnd { splashScreenView.remove() }
+                    slideLeft.start()
+                }
+                rotate.start()
+            }
+        }
+
         model.subscribe().observe(this@MainActivity) { renderData(it) }
 
         binding.searchFab.setOnClickListener {
